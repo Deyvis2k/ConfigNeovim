@@ -18,11 +18,10 @@ require('packer').startup(function()
   use {'L3MON4D3/LuaSnip'}
   use 'sainnhe/sonokai'
   use 'Mofiqul/dracula.nvim'
-  use 'windwp/nvim-autopairs'
   use 'loctvl842/monokai-pro.nvim'
+  use 'windwp/nvim-autopairs'
   use 'tiagovla/tokyodark.nvim'
   use 'ellisonleao/gruvbox.nvim'
-
 
   --indent line
   use 'lukas-reineke/indent-blankline.nvim'

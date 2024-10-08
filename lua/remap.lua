@@ -15,6 +15,25 @@ vim.keymap.set("v", "<leader>d", 'd', {noremap = true})
 vim.keymap.set("v", "<leader>dd", 'dd', {noremap = true})
 
 
+local file_commands = {
+    ["py"] = ":!python3 %",
+    ["lua"] = ":!lua %",
+    ["js"] = "!node %",
+    ["cs"] = ":!dotnet run",
+    ["rs"] = ":!cargo run",
+    ["go"] = ":!go run %",
+}
+
+function RunDeterminedFile()
+    local file_ext = vim.fn.expand('%:e')
+    if file_commands[file_ext] ~= nil then
+        vim.cmd(file_commands[file_ext])
+    else
+        print("File type not supported")
+    end
+end
+
+vim.keymap.set("n", "<F5>", ':w<CR> :lua RunDeterminedFile()<CR>', {noremap = true, silent = true})
 vim.keymap.set("n", "<leader>ls", ':lua LiveServerToggle()<CR>', {noremap = true, silent = true})
 
 function LiveServerToggle()
