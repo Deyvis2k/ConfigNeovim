@@ -22,6 +22,7 @@ require('packer').startup(function()
   use 'windwp/nvim-autopairs'
   use 'tiagovla/tokyodark.nvim'
   use 'ellisonleao/gruvbox.nvim'
+  use 'navarasu/onedark.nvim'
 
   --indent line
   use 'lukas-reineke/indent-blankline.nvim'
