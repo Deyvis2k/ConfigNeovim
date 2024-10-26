@@ -17,7 +17,7 @@ vim.keymap.set("n", "<leader>d", 'd', {noremap = true})
 vim.keymap.set("v", "<leader>d", 'd', {noremap = true})
 vim.keymap.set("v", "<leader>dd", 'dd', {noremap = true})
 
-vim.keymap.set("n", "<F5>", ':lua RunDeterminedFile()<CR>', {noremap = true, silent = true})
+vim.keymap.set("n", "<F5>", ':w<CR> :lua RunDeterminedFile()<CR>', {noremap = true, silent = true})
 vim.keymap.set("n", "<leader>ls", ':lua LiveServerToggle()<CR>', {noremap = true, silent = true})
 
 function LiveServerToggle()
