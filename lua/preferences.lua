@@ -17,8 +17,8 @@ vim.opt.swapfile = false
 vim.g.terminal = 'alacritty'
 
 -- default status feedback
-vim.o.showmode = false
-vim.opt.shortmess:append("F")
+--vim.o.showmode = false
+--vim.opt.shortmess:append("F")
 
 
 vim.g.VM_maps = {

@@ -9,6 +9,11 @@ local function get_current_file()
     return filename
 end
 
+
+local usrname = os.getenv("USER")
+local nvim_dir = "/home/" .. usrname .. "/.config/nvim"
+
+
 local file_commands = {
     ["py"] = "python3 %s",
     ["lua"] = "lua %s",
@@ -17,9 +22,10 @@ local file_commands = {
     ["rs"] = "cargo run",
     ["go"] = "go run %s",
     ["java"] = "~/.config/nvim/shellscripts/run_java.sh %s",
-    ["c"] = "~/.config/nvim/shellscripts/run_clanguage.sh %s",
-    ["cpp"] = "~/.config/nvim/shellscripts/run_clanguage.sh %s"
+    ["c"] = nvim_dir .. "/shellscripts/run_clanguage.sh %s",
+    ["cpp"] = nvim_dir .. "/shellscripts/run_clanguage.sh %s",
 }
+
 
 function RunDeterminedFile()
     local file_ext = vim.fn.expand('%:e')

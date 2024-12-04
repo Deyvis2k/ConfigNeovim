@@ -78,10 +78,6 @@ require('packer').startup(function()
     'nvim-telescope/telescope.nvim', tag = '0.1.8',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
-    
-
-  -- Bufferline
-  use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
 
   -- Treesitter
   use {
@@ -90,14 +86,11 @@ require('packer').startup(function()
   }
 
   --vim airline
-  --use 'vim-airline/vim-airline'
-  --use 'vim-airline/vim-airline-themes'
+  use 'vim-airline/vim-airline'
+  use 'vim-airline/vim-airline-themes'
 
   -- Git
   use 'tpope/vim-fugitive'
-  
-  --whichkey
-  use 'folke/which-key.nvim'
 
 end)
 
@@ -108,8 +101,8 @@ require("remap")
 require("telescope")
 require("treesitter")
 require("lsp")
+require("airline_config")
 require("yazi")
-require("bufferline_vim")
 
 
 -- Configurações do Mason
