@@ -88,10 +88,6 @@ require('packer').startup(function()
   --themery
   use 'zaldih/themery.nvim'
 
-  --vim airline
-  --use 'vim-airline/vim-airline'
-  --use 'vim-airline/vim-airline-themes'
-
   -- Git
   use 'tpope/vim-fugitive'
   
@@ -99,14 +95,12 @@ end)
 
 -- Carregando configurações pessoais
 require("preferences")
-require("colors")
 require("remap")
 require("telescope")
 require("treesitter")
+require("themeryconfig")
 require("lsp")
 require("bufferline_vim")
-require("themeryconfig")
-
 
 -- Configurações do Mason
 require('mason').setup()
@@ -122,6 +116,7 @@ require("mason-lspconfig").setup_handlers({
     lspconfig[server_name].setup {}
   end,
 })
+
 
 require('nvim-autopairs').setup{}
 
@@ -142,5 +137,10 @@ require("nvim-tree").setup({
   },
   filters = {
     dotfiles = false,
+  },
+  git = {
+    enable = true,
+    ignore = false,
+    timeout = 500,
   },
 })

@@ -6,10 +6,13 @@ require("themery").setup({
               "gruvbox", "rose-pine-dawn",
               "rose-pine-moon", "rose-pine",
               "sonokai", "dracula",
-              "dracula-soft",
-              "monokai-pro", "tokyodark",},
+              "dracula-soft", "peachpuff",
+              "monokai-pro", "monokai-pro-machine",
+              "monokai-pro-spectrum","monokai-pro-octagon",
+              "monokai-pro-ristretto","monokai-pro-classic",
+              "monokai-pro-default", "tokyodark", 
+              "sorbet"},
     livepreview = true
 })
 
 vim.keymap.set("n", "<leader>ch", ":Themery<CR>", { noremap = true, silent = true })
-
