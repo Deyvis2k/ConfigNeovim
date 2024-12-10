@@ -27,9 +27,6 @@ require('packer').startup(function()
   --indent line
   use 'lukas-reineke/indent-blankline.nvim'
 
-  --yazi
-  use 'mikavilpas/yazi.nvim'
-
   -- Dashboard
   use {'mg979/vim-visual-multi', branch = 'master'}
    
@@ -79,7 +76,6 @@ require('packer').startup(function()
     requires = { {'nvim-lua/plenary.nvim'} }
   }
     
-
   -- Bufferline
   use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
 
@@ -89,6 +85,9 @@ require('packer').startup(function()
     run = ':TSUpdate'
   }
 
+  --themery
+  use 'zaldih/themery.nvim'
+
   --vim airline
   --use 'vim-airline/vim-airline'
   --use 'vim-airline/vim-airline-themes'
@@ -96,9 +95,6 @@ require('packer').startup(function()
   -- Git
   use 'tpope/vim-fugitive'
   
-  --whichkey
-  use 'folke/which-key.nvim'
-
 end)
 
 -- Carregando configurações pessoais
@@ -108,8 +104,8 @@ require("remap")
 require("telescope")
 require("treesitter")
 require("lsp")
-require("yazi")
 require("bufferline_vim")
+require("themeryconfig")
 
 
 -- Configurações do Mason
@@ -129,12 +125,11 @@ require("mason-lspconfig").setup_handlers({
 
 require('nvim-autopairs').setup{}
 
--- disable netrw at the very start of your init.lua
+-- desativando o netrw
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-
--- OR setup with some options
+-- nvim tree
 require("nvim-tree").setup({
   sort = {
     sorter = "case_sensitive",
