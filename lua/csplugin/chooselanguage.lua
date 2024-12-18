@@ -1,15 +1,8 @@
 local choose  = {}
-
 choose.__index = choose
 
 choose.current_language = ".txt"
 choose.first_interection = true
-
-
-local function close_window(win, buf)
-    vim.api.nvim_win_close(win, true)
-    vim.api.nvim_buf_delete(buf, true)
-end
 
 function choose:create_window_select()
 
@@ -28,8 +21,7 @@ function choose:create_window_select()
         "js"
     }
     local buf = vim.api.nvim_create_buf(false, true)
-    
-    local width, height = 20, #language_options + 2
+    local width, height = 20, #language_options
     local win_width = vim.o.columns
     local win_height = vim.o.lines
     local win_x = math.floor((win_width - width) / 2)
@@ -45,7 +37,7 @@ function choose:create_window_select()
         style = "minimal",
         title = "Select language",
         title_pos = "center",
-        border = "rounded",    
+        border = "rounded",
     }
 
     local win_id = vim.api.nvim_open_win(buf, true, win_options)
@@ -65,10 +57,10 @@ function choose:create_window_select()
         end
         close()
     end, { buffer = buf, nowait = true, noremap = true, silent = true })
-    
 
     return win_id
 end
+
 
 function choose:select(language_options)
     local mouse_cursor = vim.api.nvim_win_get_cursor(0)

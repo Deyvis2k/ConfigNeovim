@@ -1,28 +1,22 @@
+
 local create = {}
 
 create.__index = create
+create.current_dir = vim.fn.expand("%:p:h")
+create.is_windowopen = false
 
-
-local function FileExists(path)
-    local f = io.open(path, "r")
-    if f ~= nil then
-        io.close(f)
-        return true
-    else
-        return false
+local function ensure_directory(path)
+    local dir = vim.fn.fnamemodify(path, ":h")
+    if dir and not vim.fn.isdirectory(dir) then
+        vim.fn.mkdir(dir, "p")
     end
 end
 
-local function is_alphabetic(name)
-    return name:find("[^%a]") ~= nil
-end
-
-
-
-local function create_window_input(prompt, on_submit)
+local function create_window_input(on_submit)
     local buf = vim.api.nvim_create_buf(false, true)
+    create.is_windowopen = true
 
-    local width, height = 50, 3
+    local width, height = 50, 1
     local win_width = vim.o.columns
     local win_height = vim.o.lines
     local win_x = math.floor((win_width - width) / 2)
@@ -35,33 +29,29 @@ local function create_window_input(prompt, on_submit)
         row = win_y,
         col = win_x,
         style = "minimal",
-        title = "Input (Cannot be empty or not alphabetic)",
+        title = "Enter filename",
         title_pos = "center",
-        --border not rounded
         border = "rounded",
     })
-    
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, {prompt})
-    vim.api.nvim_buf_set_lines(buf, 1, -1, false, {""})
 
-    --options
+    local current_dir = create.current_dir .. "/"
+
+    vim.api.nvim_buf_set_lines(buf, 0, 1, false, {current_dir})
     vim.api.nvim_buf_set_option(buf, "modifiable", true)
-    vim.api.nvim_buf_set_option(buf, "buftype", "prompt")
 
     vim.api.nvim_command("startinsert!")
 
-
     _G.SubmitInput = function()
-        local lines = vim.api.nvim_buf_get_lines(buf, 1, 2, false)
+        local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
         local input = lines[1] or ""
 
-        vim.api.nvim_win_close(win, true)
-        vim.api.nvim_buf_delete(buf, {force = true})
-
+        print(input)
 
         if on_submit then
             on_submit(input)
         end
+        vim.api.nvim_win_close(win, true)
+        vim.api.nvim_buf_delete(buf, {force = true})
     end
 
     _G.CloseInput = function()
@@ -69,61 +59,38 @@ local function create_window_input(prompt, on_submit)
         vim.api.nvim_buf_delete(buf, {force = true})
     end
 
-    
-    vim.api.nvim_buf_set_keymap(buf, "i", "<CR>", [[<cmd>lua SubmitInput()<CR>]], { nowait = true, noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(buf, "n", "<Esc>", [[<cmd>lua CloseInput()<CR>]], { nowait = true, noremap = true, silent = true }) 
+    vim.api.nvim_buf_set_keymap(buf, "i", "<CR>", [[<cmd>lua SubmitInput()<CR>]], {nowait = true, noremap = true, silent = true})
+    vim.api.nvim_buf_set_keymap(buf, "n", "<Esc>", [[<cmd>lua CloseInput()<CR>]], {nowait = true, noremap = true, silent = true})
 end
 
-local csharp_prefix = [[
-using System;
-
-namespace Foo;
-
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        Console.WriteLine("Hello World!");
-    }
-}
-]]
-
 function create.create_file()
-    create_window_input("Enter filename:", function(filename)
+    create_window_input(function(filename)
         if filename == nil or filename == "" then
             print("Filename cannot be empty")
             return
         end
 
-        local extension = ""
+        local language_module = require("csplugin.chooselanguage")
+        local extension = language_module and language_module.current_language or ""
 
-        if require("csplugin.chooselanguage").current_language ~= nil then
-            extension = require("csplugin.chooselanguage").current_language
-        end
+        ensure_directory(filename)
 
-        local actual_dir = vim.fn.expand("%:p:h")
-        if actual_dir == "" then
-            actual_dir = vim.fn.getcwd()
-        end
+        local splited = vim.split(filename, "/")
+        local name = splited[#splited]
+        name = name:sub(1, 1):upper() .. name:sub(2)
+        local csharp_prefix = [[
+using System;
 
-        local name = filename:gsub("[^%a]", "")
-        if FileExists(name) then
-            print("File already exists")
-        else
-            local file = io.open(actual_dir .. "/" .. name .. extension, "w")
-            if file then
-                if extension == ".cs" then
-                    print("Creating C# file...")
-                    file:write(csharp_prefix)
-                    io.close(file)
-                else
-                    print("Creating file...")
-                    io.close(file)
-                end
-            else
-                print("Error creating file:", name)
-            end
-        end
+namespace Foo;
+
+public class ]] .. name .. [[
+{
+    public ]] .. name .. [[() {}
+}
+]]
+        local file = io.open(filename .. extension, "w+")
+        if extension == ".cs" then file:write(csharp_prefix) end
+        file:close()
     end)
 end
 

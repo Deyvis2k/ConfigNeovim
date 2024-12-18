@@ -1,13 +1,13 @@
 vim.cmd [[packadd packer.nvim]]
 
+
 -- Packer startup function
 require('packer').startup(function()
-  use 'wbthomason/packer.nvim' 
+  use 'wbthomason/packer.nvim'
   use 'theprimeagen/harpoon'
   use {'neoclide/coc.nvim', branch = 'release'}
   use 'folke/tokyonight.nvim'
   use 'rose-pine/neovim'
-  
   -- LSP
   use 'neovim/nvim-lspconfig'
   use 'williamboman/mason.nvim'
@@ -22,14 +22,14 @@ require('packer').startup(function()
   use 'windwp/nvim-autopairs'
   use 'tiagovla/tokyodark.nvim'
   use 'ellisonleao/gruvbox.nvim'
-  use 'navarasu/onedark.nvim'
+  use 'shaunsingh/nord.nvim'
+  use 'olimorris/onedarkpro.nvim'
 
   --indent line
   use 'lukas-reineke/indent-blankline.nvim'
 
   -- Dashboard
   use {'mg979/vim-visual-multi', branch = 'master'}
-   
 
   -- nvim tree 
   use {
@@ -39,25 +39,16 @@ require('packer').startup(function()
       }
   }
 
-  use {
-  'nvimdev/dashboard-nvim',
-  event = 'VimEnter',
-  config = function()
-    require('dashboard').setup {
-      -- config
-    }
-  end,
-  requires = {'nvim-tree/nvim-web-devicons'}
-}
-
---toggleterm 
+  --toggleterm 
   use {
     "akinsho/toggleterm.nvim",
     tag = '*',
     config = function()
       require("toggleterm").setup()
    end
-}
+  }
+
+  use { 'folke/snacks.nvim' }
 
   -- Codeium
   use {
@@ -90,7 +81,6 @@ require('packer').startup(function()
 
   -- Git
   use 'tpope/vim-fugitive'
-  
 end)
 
 -- Carregando configurações pessoais
@@ -101,12 +91,14 @@ require("treesitter")
 require("themeryconfig")
 require("lsp")
 require("bufferline_vim")
+require("nordscheme")
 
 -- Configurações do Mason
 require('mason').setup()
 require("mason-lspconfig").setup({
   ensure_installed = { "omnisharp" },
 })
+
 
 
 -- Configurações do LSP
@@ -124,6 +116,25 @@ require('nvim-autopairs').setup{}
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+require('onedarkpro').setup({
+    styles = {
+        types = "bold",
+        methods = "bold",
+        numbers = "bold",
+        strings = "bold",
+        comments = "bold",
+        keywords = "bold",
+        constants = "bold",
+        functions = "bold",
+        operators = "bold",
+        variables = "bold",
+        parameters = "bold",
+        conditionals = "bold",
+        virtual_text = "bold",
+  }
+})
+
+
 -- nvim tree
 require("nvim-tree").setup({
   sort = {
@@ -133,7 +144,20 @@ require("nvim-tree").setup({
     width = 40,
   },
   renderer = {
-    group_empty = true,
+    group_empty = false,
+    add_trailing = true,
+    highlight_git = true,
+    highlight_opened_files = "none",
+    indent_markers = {
+      enable = true,
+      inline_arrows = true,
+      icons = {
+        corner = "└",
+        edge = "│",
+        item = "│",
+        none = " ",
+      },
+    },
   },
   filters = {
     dotfiles = false,
@@ -144,3 +168,27 @@ require("nvim-tree").setup({
     timeout = 500,
   },
 })
+
+
+lspconfig.lua_ls.setup {
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        globals = {
+          'vim',
+          'require',
+          'use'
+        },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}

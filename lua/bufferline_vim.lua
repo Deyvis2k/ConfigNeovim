@@ -29,6 +29,8 @@ require('bufferline').setup {
         filetype = "NvimTree",
         text = "File Explorer",
         text_align = "center",
+        highlight = "Directory",
+        separator = true
       },
     },
 
@@ -37,6 +39,10 @@ require('bufferline').setup {
             fg = "#ff0000",
             underline = true,
             bold = true
+        },
+        offset_separator = {
+                fg = "#ff0000",
+                bg = "#ff0000"
         },
     },
   },

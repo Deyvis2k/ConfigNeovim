@@ -16,6 +16,10 @@ vim.o.encoding = 'utf-8'
 vim.opt.swapfile = false 
 vim.g.terminal = 'alacritty'
 
+vim.o.history = 1000
+vim.o.undodir = vim.fn.stdpath("data") .. "/undo"
+vim.o.undofile = true
+
 -- default status feedback
 --vim.o.showmode = false
 --vim.opt.shortmess:append("F")

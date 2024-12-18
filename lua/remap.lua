@@ -4,7 +4,19 @@ require('compiler')
 
 vim.g.mapleader = " "
 
-vim.keymap.set("n", "<leader>e", vim.cmd.NvimTreeToggle)
+--nvim tree 
+vim.keymap.set("n", "<leader>ee", vim.cmd.NvimTreeToggle)
+
+vim.keymap.set("n", "<leader>ef", function()
+    if require("nvim-tree.view").is_visible() then
+        vim.api.nvim_command("wincmd w")
+    else
+        vim.cmd("NvimTreeToggle")
+    end
+end)
+
+
+
 vim.keymap.set("n", "<leader>tt", vim.cmd.ToggleTerm)
 vim.keymap.set("n", "<leader>n", ':nohlsearch<CR>', {noremap = true, silent = true})
 
@@ -12,6 +24,24 @@ vim.keymap.set("n", "<leader>n", ':nohlsearch<CR>', {noremap = true, silent = tr
 vim.keymap.set("n", "d", '"_d', {noremap = true})
 vim.keymap.set("v", "d", '"_d', {noremap = true})
 vim.keymap.set("v", "dd", '"_dd', {noremap = true})
+
+
+--codeium shortcuts
+vim.keymap.set("n", "<leader>cd",
+    function()
+        local function CodeimToggle()
+            if vim.g.codeium_enabled == 1 then
+                vim.g.codeium_enabled = 0
+                vim.cmd("Codeium Disable")
+                print("Codeium Disabled")
+            else
+                vim.g.codeium_enabled = 1
+                vim.cmd("Codeium Enable")
+                print("Codeium Enabled")
+            end
+        end
+        CodeimToggle()
+end, { expr = true, silent = true })
 
 
 vim.keymap.set("n", "<leader>d", 'd', {noremap = true})

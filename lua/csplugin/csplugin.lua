@@ -6,7 +6,7 @@ function csplugin.show()
     local opts = { "Create new file", "Select language" ,  "Leave" }
     local bufnr = vim.api.nvim_create_buf(false, true)
 
-    local width, height = 30, #opts + 2
+    local width, height = 30, #opts
 
     local win_opts = {
         relative = "editor",
@@ -42,13 +42,17 @@ function csplugin.select(options)
     if options[line] then
         if line == #options then
             vim.api.nvim_win_close(csplugin.win_id, true)
+            create.is_windowopen = false
         elseif line == 1 then
             create.create_file()
-            vim.api.nvim_win_close(csplugin.win_id, true)
         elseif line == 2 then
             choose.create_window_select()
         end
     end
+end
+
+if not create.is_windowopen then
+    create.current_dir = vim.fn.expand("%:p:h")
 end
 
 return csplugin
