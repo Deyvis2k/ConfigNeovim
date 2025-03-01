@@ -4,17 +4,6 @@ require('compiler')
 
 vim.g.mapleader = " "
 
---nvim tree 
-vim.keymap.set("n", "<leader>ee", vim.cmd.NvimTreeToggle)
-
-vim.keymap.set("n", "<leader>ef", function()
-    if require("nvim-tree.view").is_visible() then
-        vim.api.nvim_command("wincmd w")
-    else
-        vim.cmd("NvimTreeToggle")
-    end
-end)
-
 -- nvim tree 
 vim.keymap.set("n", "<leader>e", vim.cmd.NvimTreeToggle)
 
