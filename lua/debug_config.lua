@@ -1,7 +1,8 @@
 local dap = require('dap')
+local username = os.getenv("USER")
 dap.adapters.coreclr = {
   type = 'executable',
-  command = '/home/deyvis/.local/share/nvim/mason/packages/netcoredbg/libexec/netcoredbg/netcoredbg',
+  command = '/home/' .. username .. '/.local/share/nvim/mason/packages/netcoredbg/libexec/netcoredbg/netcoredbg',
   args = { '--interpreter=vscode' },
 }
 
