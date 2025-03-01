@@ -1,5 +1,7 @@
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
+local lspkind = require('lspkind')
+local luasnip = require('luasnip')
 
 cmp.setup({
   mapping = cmp.mapping.preset.insert({
@@ -46,8 +48,7 @@ cmp.setup({
     }),
   },
 })
-local lspkind = require('lspkind')
-local luasnip = require('luasnip')
+
 
 require('mason').setup({
     ui = {
