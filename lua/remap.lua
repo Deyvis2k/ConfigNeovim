@@ -11,6 +11,9 @@ vim.keymap.set("n", "<leader>e", vim.cmd.NvimTreeToggle)
 vim.keymap.set("n", "<leader>\\", require("Comment.api").toggle.linewise.current)
 vim.keymap.set("v", "<leader>\\", require("Comment.api").call('toggle.linewise', 'g@'), { expr = true })
 
+vim.keymap.set("n", "<leader>lg", ':LazyGit<CR>', {noremap = true, silent = true})
+
+
 --debug
 vim.keymap.set("n", "<F4>", require("dap").toggle_breakpoint)
 vim.keymap.set("n", "<F6>", require("dap").continue)
@@ -78,6 +81,49 @@ vim.keymap.set("n", "<leader>l", ":bnext<CR>:redraw!<CR>", { silent = true })
 
 --csplugin
 vim.api.nvim_set_keymap("n", "<leader>cs", ":lua require'csplugin.csplugin'.show()<CR>", { noremap = true, silent = true })
+
+
+local Terminal = require("toggleterm.terminal").Terminal
+
+vim.keymap.set("n", "<leader>mm", function()
+    local dir_name = vim.fn.getcwd()
+    local csproj_file = vim.fn.globpath(dir_name, "*.csproj", false, true)[1] or ""
+
+    if csproj_file == "" then
+        print("Erro: Nenhum arquivo .csproj encontrado no diretório atual.")
+        return
+    end
+
+    local model_name = vim.fn.input("Nome do modelo: ")
+    local data_context = vim.fn.input("DataContext: ")
+    local controller_name = vim.fn.input("Nome do controlador: ")
+
+    if(model_name == "" or data_context == "" or controller_name == "") then
+        return
+    end
+
+    local project_name = csproj_file:match("([^/]+)%.csproj$")
+    local namespace = project_name and (project_name .. ".Controller") or "DefaultNamespace.Controllers"
+
+    local command = string.format(
+        'dotnet aspnet-codegenerator controller --project "%s" --controllerName %s --relativeFolderPath "%s/Controller" --restWithNoViews --model %s --dataContext %s --controllerNamespace %s; exec $SHELL',
+        csproj_file, controller_name, dir_name, model_name, data_context, namespace
+    )
+
+    local toggleterm = Terminal:new({
+        cmd = command,
+        direction = "float",
+        close_on_exit = false,
+        hidden = false
+    })
+
+    toggleterm:toggle()
+end, { noremap = true, silent = true, desc = "Executar dotnet aspnet-codegenerator" })
+
+
+
+
+
 
 
 vim.keymap.set("n", "<leader>zx", function()

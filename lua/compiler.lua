@@ -12,9 +12,10 @@ end
 
 local usrname = os.getenv("USER")
 local nvim_dir = "/home/" .. usrname .. "/.config/nvim"
+local current_dir = vim.fn.getcwd()
 
 function ChangeBuildContent()
-    local file = io.open("/home/" .. usrname .. "/.config/nvim/temp/build.txt", "w")
+    local file = io.open(current_dir .. "/build.txt", "w")
     if file == nil then
         return
     end
@@ -59,21 +60,20 @@ function RunDeterminedFile()
     end
 
     if file_ext == "c" or file_ext == "cpp" then
-        if vim.fn.filereadable("/home/" .. usrname .. "/.config/nvim/temp/build.txt") == 1 and has_content("/home/" .. usrname .. "/.config/nvim/temp/build.txt") then
+        if vim.fn.filereadable(current_dir .. "/build.txt") == 1 and has_content(current_dir .. "/build.txt") then
             print("If you want to change build.txt enters the command: :lua ChangeBuildContent()")
         else
-            local current_dir = vim.fn.getcwd()
             local binary_path = vim.fn.input("Binary name: ", current_dir)
 
             --create build.txt
-            local build_file = io.open("/home/" .. usrname .. "/.config/nvim/temp/build.txt", "w")
+            local build_file = io.open(current_dir .. "/build.txt", "w+")
             if build_file == nil then
                 print("Error opening file")
                 return
             end
             build_file:close()
 
-            local file = io.open("/home/" .. usrname .. "/.config/nvim/temp/build.txt", "w+")
+            local file = io.open(current_dir .. "/build.txt", "a")
 
             if file == nil then
                 print("Error opening file")

@@ -26,11 +26,19 @@ require("lazy").setup({
   { "mg979/vim-visual-multi", branch = "master" },
   { "folke/snacks.nvim" },
 
+  --lazygit
+  {
+    "kdheepak/lazygit.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+  },
+
   {
     "rcarriga/nvim-dap-ui",
     dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
   },
-
   {
     "nvim-tree/nvim-tree.lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -96,8 +104,14 @@ require("lazy").setup({
   { "tiagovla/tokyodark.nvim" },
   { "AstroNvim/astrotheme" },
   { "folke/tokyonight.nvim" },
-  { "olimorris/onedarkpro.nvim" },
+  { "navarasu/onedark.nvim"},
   { "zaldih/themery.nvim" },
+
+  {
+    "akinsho/bufferline.nvim",
+    version = "v3.*",
+    dependencies = "nvim-tree/nvim-web-devicons",
+  },
 
   {
     "L3MON4D3/LuaSnip",
@@ -114,8 +128,7 @@ require("treesitter")
 require("astro")
 require("themeryconfig")
 require("debug_config")
---not used anymore
--- require ("bufferline_vim")
+require ("bufferline_vim")
 
 local lspconfig = require("lspconfig")
 require("mason-lspconfig").setup_handlers({

@@ -2,7 +2,7 @@
 require("themery").setup({
     themes = {"tokyonight", "tokyonight-storm",
               "tokyonight-day", "tokyonight-night",
-              "tokyonight-moon", "onedark", "onedark_dark", "onedark_vivid",
+              "tokyonight-moon", "onedark",
               "gruvbox", "rose-pine-dawn",
               "astrodark", "rose-pine-dawn",
               "rose-pine-moon", "rose-pine",
