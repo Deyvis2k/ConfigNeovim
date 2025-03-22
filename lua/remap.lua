@@ -32,7 +32,6 @@ vim.keymap.set("n", "d", '"_d', {noremap = true})
 vim.keymap.set("v", "d", '"_d', {noremap = true})
 vim.keymap.set("v", "dd", '"_dd', {noremap = true})
 
-
 --codeium shortcuts
 -- codeium shortcuts
 vim.keymap.set("n", "<leader>cd",
