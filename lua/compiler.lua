@@ -25,13 +25,43 @@ function ChangeBuildContent()
     file:close()
 end
 
+local function find_package_json()
+    local package_json_path = vim.fn.findfile("package.json", ".;")
 
+    if package_json_path ~= "" then
+        print("Found package.json at: " .. package_json_path)
+        return package_json_path
+    else
+        print("No package.json found")
+        return nil
+    end
+end
+
+local function yarn_develop_in_toggleterm()
+    local package_json_path = find_package_json()
+
+    if package_json_path then
+        local package_dir = vim.fn.fnamemodify(package_json_path, ":h")
+        print("Running yarn develop in " .. package_dir)
+
+        local toggleterm = Terminal:new({
+            cmd = "cd " .. package_dir .. " && yarn develop",
+            direction = "float",
+            close_on_exit = false,
+            hidden = false
+        })
+        toggleterm:toggle()
+    else
+        print("No package.json found, cannot run yarn develop")
+    end
+end
 
 
 local file_commands = {
     ["py"] = "python3 %s",
     ["lua"] = "lua %s",
     ["js"] = "node %s",
+    ["ts"] = yarn_develop_in_toggleterm,
     ["cs"] = "dotnet run",
     ["axaml"] = "dotnet run",
     ["rs"] = "cargo run",
@@ -50,7 +80,6 @@ local function has_content(file_path)
     file:close()
     return content ~= ""
 end
-
 
 function RunDeterminedFile()
     local file_ext = vim.fn.expand('%:e')
@@ -86,12 +115,18 @@ function RunDeterminedFile()
     end
 
     local command = file_commands[file_ext]
-    if command then
+
+    if command and type(command) == "function" then
+        command()
+        return
+    end
+
+    if command and type(command) == "string" then
         local term = Terminal:new({hidden = true})
         term:toggle()
 
         vim.defer_fn(function()
-          term:send(string.format(command, filename))
+            term:send(string.format(command, filename))
         end, 100)
     else
         print("File type not supported")

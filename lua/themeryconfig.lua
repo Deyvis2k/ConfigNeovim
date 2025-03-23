@@ -2,8 +2,7 @@
 require("themery").setup({
     themes = {"tokyonight", "tokyonight-storm",
               "tokyonight-day", "tokyonight-night",
-              "tokyonight-moon", "onedark",
-              "gruvbox", "rose-pine-dawn",
+              "tokyonight-moon", "onedark", "rose-pine-dawn",
               "astrodark", "rose-pine-dawn",
               "rose-pine-moon", "rose-pine",
               "sonokai", "dracula",
@@ -12,7 +11,7 @@ require("themery").setup({
               "monokai-pro-spectrum","monokai-pro-octagon",
               "monokai-pro-ristretto","monokai-pro-classic",
               "monokai-pro-default", "tokyodark",
-              "sorbet", "retrobox", "nord",
+              "sorbet", "retrobox",
               "sorbet", "retrobox"},
     livepreview = true
 })

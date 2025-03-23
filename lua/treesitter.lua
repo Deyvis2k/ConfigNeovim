@@ -25,4 +25,4 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-require("ibl").setup()
+-- require("ibl").setup()

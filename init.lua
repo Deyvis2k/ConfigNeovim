@@ -109,7 +109,7 @@ require("lazy").setup({
 
   {
     "akinsho/bufferline.nvim",
-    version = "v3.*",
+    version = "*",
     dependencies = "nvim-tree/nvim-web-devicons",
   },
 
@@ -128,7 +128,7 @@ require("treesitter")
 require("astro")
 require("themeryconfig")
 require("debug_config")
-require ("bufferline_vim")
+require("bufferline_vim")
 
 local lspconfig = require("lspconfig")
 require("mason-lspconfig").setup_handlers({
