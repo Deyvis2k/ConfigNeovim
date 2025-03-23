@@ -11,7 +11,6 @@ require('bufferline').setup {
       icon = '',
       style = 'underline'
     },
-    
     buffer_close_icon = '', -- Ícone de fechar buffer
     modified_icon = '●', -- Ícone de modificação
     close_icon = '', -- Ícone para fechar bufferline inteira
