@@ -93,8 +93,6 @@ function RunDeterminedFile()
             print("If you want to change build.txt enters the command: :lua ChangeBuildContent()")
         else
             local binary_path = vim.fn.input("Binary name: ", current_dir)
-
-            --create build.txt
             local build_file = io.open(current_dir .. "/build.txt", "w+")
             if build_file == nil then
                 print("Error opening file")
@@ -122,7 +120,12 @@ function RunDeterminedFile()
     end
 
     if command and type(command) == "string" then
-        local term = Terminal:new({hidden = true})
+        local term = Terminal:new({
+            cmd = string.format(command, filename),
+            direction = "float",
+            close_on_exit = false,
+            hidden = false
+        })
         term:toggle()
 
         vim.defer_fn(function()

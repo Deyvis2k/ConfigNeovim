@@ -62,8 +62,13 @@ vim.keymap.set("n", "<F5>", ':w<CR> :lua RunDeterminedFile()<CR>', {noremap = tr
 vim.keymap.set("n", "<leader>ls", ':lua LiveServerToggle()<CR>', {noremap = true, silent = true})
 
 function LiveServerToggle()
-    local liveServer = Terminal:new({cmd = "live-server --browser='brave' .", hidden = true})
-    local liveServer = Terminal:new({cmd = "live-server --browser='brave-browser' .", hidden = true})
+    local liveServer = Terminal:new({
+        -- cmd = "live-server --browser='firefox' .",
+        cmd = string.format("live-server --browser='firefox' %s", vim.fn.expand("%:p:h")),
+        hidden = false,
+        direction = "float",
+        close_on_exit = false
+    })
     liveServer:toggle()
 end
 
