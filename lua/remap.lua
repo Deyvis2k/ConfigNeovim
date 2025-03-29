@@ -1,17 +1,17 @@
 local Terminal = require('toggleterm.terminal').Terminal
-require('compiler')
+local compil = require('compiler')
 
 
 vim.g.mapleader = " "
 
--- nvim tree 
+-- nvim tree
 vim.keymap.set("n", "<leader>e", vim.cmd.NvimTreeToggle)
 
 -- comment nvim
 vim.keymap.set("n", "<leader>\\", require("Comment.api").toggle.linewise.current)
 vim.keymap.set("v", "<leader>\\", require("Comment.api").call('toggle.linewise', 'g@'), { expr = true })
 
-vim.keymap.set("n", "<leader>lg", ':LazyGit<CR>', {noremap = true, silent = true})
+vim.keymap.set("n", "<leader>lg", ':LazyGit<CR>', { noremap = true, silent = true })
 
 
 --debug
@@ -28,12 +28,12 @@ vim.keymap.set("n", "<leader>duc", require("dapui").close)
 
 
 vim.keymap.set("n", "<leader>tt", vim.cmd.ToggleTerm)
-vim.keymap.set("n", "<leader>n", ':nohlsearch<CR>', {noremap = true, silent = true})
+vim.keymap.set("n", "<leader>n", ':nohlsearch<CR>', { noremap = true, silent = true })
 
 --replace DD and dd
-vim.keymap.set("n", "d", '"_d', {noremap = true})
-vim.keymap.set("v", "d", '"_d', {noremap = true})
-vim.keymap.set("v", "dd", '"_dd', {noremap = true})
+vim.keymap.set("n", "d", '"_d', { noremap = true })
+vim.keymap.set("v", "d", '"_d', { noremap = true })
+vim.keymap.set("v", "dd", '"_dd', { noremap = true })
 
 --codeium shortcuts
 -- codeium shortcuts
@@ -51,15 +51,15 @@ vim.keymap.set("n", "<leader>cd",
             end
         end
         CodeimToggle()
-end, { expr = true, silent = true })
+    end, { expr = true, silent = true })
 
 
-vim.keymap.set("n", "<leader>d", 'd', {noremap = true})
-vim.keymap.set("v", "<leader>d", 'd', {noremap = true})
-vim.keymap.set("v", "<leader>dd", 'dd', {noremap = true})
+vim.keymap.set("n", "<leader>d", 'd', { noremap = true })
+vim.keymap.set("v", "<leader>d", 'd', { noremap = true })
+vim.keymap.set("v", "<leader>dd", 'dd', { noremap = true })
 
-vim.keymap.set("n", "<F5>", ':w<CR> :lua RunDeterminedFile()<CR>', {noremap = true, silent = true})
-vim.keymap.set("n", "<leader>ls", ':lua LiveServerToggle()<CR>', {noremap = true, silent = true})
+vim.keymap.set("n", "<F5>", function() compil.RunDeterminedFile() end, { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>ls", ':lua LiveServerToggle()<CR>', { noremap = true, silent = true })
 
 function LiveServerToggle()
     local liveServer = Terminal:new({
@@ -73,8 +73,8 @@ function LiveServerToggle()
 end
 
 vim.keymap.set("i", "<C-s>", function()
-	vim.cmd.w()
-	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, true, true), "n", true)
+    vim.cmd.w()
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, true, true), "n", true)
 end)
 
 --buffers
@@ -85,7 +85,8 @@ vim.keymap.set("n", "<leader>l", ":bnext<CR>:redraw!<CR>", { silent = true })
 
 
 --csplugin
-vim.api.nvim_set_keymap("n", "<leader>cs", ":lua require'csplugin.csplugin'.show()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>cs", ":lua require'csplugin.csplugin'.show()<CR>",
+    { noremap = true, silent = true })
 
 
 local Terminal = require("toggleterm.terminal").Terminal
@@ -103,7 +104,7 @@ vim.keymap.set("n", "<leader>mm", function()
     local data_context = vim.fn.input("DataContext: ")
     local controller_name = vim.fn.input("Nome do controlador: ")
 
-    if(model_name == "" or data_context == "" or controller_name == "") then
+    if (model_name == "" or data_context == "" or controller_name == "") then
         return
     end
 
@@ -132,11 +133,11 @@ end, { noremap = true, silent = true, desc = "Executar dotnet aspnet-codegenerat
 
 
 vim.keymap.set("n", "<leader>zx", function()
-        local function print_package_csplugin()
-           print(package.loaded["csplugin.csplugin"] or "csplugin.csplugin not loaded")
-        end
-        print_package_csplugin()
-    end, { buffer = buf, nowait = true, noremap = true, silent = true })
+    local function print_package_csplugin()
+        print(package.loaded["csplugin.csplugin"] or "csplugin.csplugin not loaded")
+    end
+    print_package_csplugin()
+end, { buffer = buf, nowait = true, noremap = true, silent = true })
 
 function reload_csplugin()
     for plugin_name, _ in pairs(package.loaded) do
@@ -144,16 +145,15 @@ function reload_csplugin()
             package.loaded[plugin_name] = nil
         end
     end
-    local success, reloaded_plugin = pcall(require,"csplugin.csplugin")
+    local success, reloaded_plugin = pcall(require, "csplugin.csplugin")
     if success then
-        vim.api.nvim_set_keymap("n", "<leader>cs", ":lua require'csplugin.csplugin'.show()<CR>", { noremap = true, silent = true })
+        vim.api.nvim_set_keymap("n", "<leader>cs", ":lua require'csplugin.csplugin'.show()<CR>",
+            { noremap = true, silent = true })
         print("csplugin recarregado com sucesso!")
     else
         print("Erro ao recarregar csplugin:", reloaded_plugin)
     end
 end
 
-
 --reload csplugin
 vim.api.nvim_set_keymap("n", "<leader>rcs", ":lua reload_csplugin()<CR>", { noremap = true, silent = true })
-

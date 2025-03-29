@@ -13,8 +13,7 @@ vim.o.mouse = "a"
 vim.o.hlsearch = true
 vim.o.scrolloff = 8
 vim.o.encoding = 'utf-8'
-vim.opt.swapfile = false 
-vim.g.terminal = 'alacritty'
+vim.opt.swapfile = false
 vim.g.terminal = 'kitty'
 vim.o.signcolumn = "yes"
 vim.o.cursorline = true
@@ -32,5 +31,3 @@ vim.g.VM_maps = {
   ['Find Under'] = '<C-d>',
   ['Find Subword Under'] = '<C-d>',
 }
-
-

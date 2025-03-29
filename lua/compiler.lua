@@ -1,7 +1,7 @@
 local Terminal = require('toggleterm.terminal').Terminal
 
 local function get_current_file()
-    local filename = vim.api.nvim_buf_get_name(0)  -- Pega o nome completo do arquivo no buffer atual
+    local filename = vim.api.nvim_buf_get_name(0) -- Pega o nome completo do arquivo no buffer atual
     if filename == "" then
         print("Sem arquivo no buffer atual")
         return nil
@@ -14,7 +14,7 @@ local usrname = os.getenv("USER")
 local nvim_dir = "/home/" .. usrname .. "/.config/nvim"
 local current_dir = vim.fn.getcwd()
 
-function ChangeBuildContent()
+local function ChangeBuildContent()
     local file = io.open(current_dir .. "/build.txt", "w")
     if file == nil then
         return
@@ -81,7 +81,7 @@ local function has_content(file_path)
     return content ~= ""
 end
 
-function RunDeterminedFile()
+local function RunDeterminedFile()
     local file_ext = vim.fn.expand('%:e')
     local filename = get_current_file()
     if not filename then
@@ -90,7 +90,7 @@ function RunDeterminedFile()
 
     if file_ext == "c" or file_ext == "cpp" then
         if vim.fn.filereadable(current_dir .. "/build.txt") == 1 and has_content(current_dir .. "/build.txt") then
-            print("If you want to change build.txt enters the command: :lua ChangeBuildContent()")
+            print("If you want to change build.txt, enter the command: :lua ChangeBuildContent()")
         else
             local binary_path = vim.fn.input("Binary name: ", current_dir)
             local build_file = io.open(current_dir .. "/build.txt", "w+")
@@ -101,7 +101,6 @@ function RunDeterminedFile()
             build_file:close()
 
             local file = io.open(current_dir .. "/build.txt", "a")
-
             if file == nil then
                 print("Error opening file")
                 return
@@ -120,19 +119,27 @@ function RunDeterminedFile()
     end
 
     if command and type(command) == "string" then
+        local formatted_cmd = string.format(command, filename)
+
         local term = Terminal:new({
-            cmd = string.format(command, filename),
+            cmd = formatted_cmd,
             direction = "float",
             close_on_exit = false,
             hidden = false
         })
-        term:toggle()
 
-        vim.defer_fn(function()
-            term:send(string.format(command, filename))
-        end, 100)
+        if term then
+            term:toggle()
+        else
+            print("Erro: Falha ao inicializar o terminal")
+        end
     else
         print("File type not supported")
     end
 end
 
+
+return {
+    RunDeterminedFile = RunDeterminedFile,
+    ChangeBuildContent = ChangeBuildContent
+}
