@@ -2,7 +2,7 @@ return {
     {'saghen/blink.cmp', dependencies = {
     'rafamadriz/friendly-snippets',
     'moyiz/blink-emoji.nvim',
-    'onsails/lspkind.nvim', -- Para ícones
+    'onsails/lspkind.nvim',
     },
     version = "1.*",
         ---@module 'blink.cmp'
@@ -10,7 +10,7 @@ return {
         opts = {
             keymap = {
                 preset = "default",
-                ["<Tab>"] = { "accept", "fallback"},
+                ["<CR>"] = { "accept", "fallback"},
             },
             appearance = {
                 nerd_font_variant = "mono",
@@ -62,17 +62,20 @@ return {
                         }
                     }
                 },
-                ghost_text = {
-                    enabled = true,
-                }
-
             },
 
             signature = {enabled = true},
 
             sources = {
                 default = { "lsp", "path", "snippets", "buffer", "emoji"},
+                per_filetype = {
+                    sql = {'snippets', 'dadbod', 'buffer'},
+                },
                 providers = {
+                    dadbod = {
+                        name = "Dadbod",
+                        module = "vim_dadbod_completion.blink",
+                    },
                     emoji = {
                         module = "blink-emoji",
                         name = "Emoji",

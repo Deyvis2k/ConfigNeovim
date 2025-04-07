@@ -11,9 +11,11 @@ return {
   { "lukas-reineke/indent-blankline.nvim" },
   { "mg979/vim-visual-multi", branch = "master" },
   { "folke/snacks.nvim" },
-  
+  { "tpope/vim-dadbod" },
+  { "kristijanhusak/vim-dadbod-ui"},
+  { "kristijanhusak/vim-dadbod-completion" },
 
-  require("nvim_tree_config"),
+  require("neo_tree_config"),
   require("blink_config"),
 
    {

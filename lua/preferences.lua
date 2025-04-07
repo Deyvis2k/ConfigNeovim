@@ -6,7 +6,7 @@ vim.o.smartindent = true
 vim.o.expandtab = true
 vim.o.shiftwidth = 4
 vim.o.wrap = false
-vim.g.codeium_enabled = true
+vim.g.codeium_enabled = false
 vim.o.termguicolors = true
 vim.o.smartcase = true
 vim.o.mouse = "a"
@@ -17,7 +17,7 @@ vim.opt.swapfile = false
 vim.g.terminal = 'kitty'
 vim.o.signcolumn = "yes"
 vim.o.cursorline = true
-
+vim.g.mapleader = " "
 vim.o.history = 1000
 vim.o.undodir = vim.fn.stdpath("data") .. "/undo"
 vim.o.undofile = true

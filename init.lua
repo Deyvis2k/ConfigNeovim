@@ -11,11 +11,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
 require("lazy").setup({
     require("dependencies")
 })
-
 
 local lspconfig = require("lspconfig")
 require("mason-lspconfig").setup_handlers({
@@ -33,7 +31,6 @@ require("astro")
 require("themeryconfig")
 require("debug_config")
 require("bufferline_vim")
-
 
 
 require("nvim-autopairs").setup()

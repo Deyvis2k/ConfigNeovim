@@ -1,18 +1,14 @@
 local Terminal = require('toggleterm.terminal').Terminal
 local compil = require('compiler')
 
-
-vim.g.mapleader = " "
-
--- nvim tree
-vim.keymap.set("n", "<leader>e", vim.cmd.NvimTreeToggle)
+-- neo tree
+vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { noremap = true, silent = true })
 
 -- comment nvim
 vim.keymap.set("n", "<leader>\\", require("Comment.api").toggle.linewise.current)
 vim.keymap.set("v", "<leader>\\", require("Comment.api").call('toggle.linewise', 'g@'), { expr = true })
 
 vim.keymap.set("n", "<leader>lg", ':LazyGit<CR>', { noremap = true, silent = true })
-
 
 --debug
 vim.keymap.set("n", "<F4>", require("dap").toggle_breakpoint)
@@ -26,8 +22,17 @@ vim.keymap.set("n", "<leader>dr", require("dap").repl.open)
 vim.keymap.set("n", "<leader>duo", require("dapui").open)
 vim.keymap.set("n", "<leader>duc", require("dapui").close)
 
+--ctrl a like 
+vim.keymap.set("n", "<C-a>", "ggVG", { noremap = true })
 
-vim.keymap.set("n", "<leader>tt", vim.cmd.ToggleTerm)
+vim.keymap.set("n", "<leader>tt", function ()
+    local floatedterm = Terminal:new({
+        direction="float",
+        close_on_exit=true
+    })
+
+    floatedterm:toggle()
+end)
 vim.keymap.set("n", "<leader>n", ':nohlsearch<CR>', { noremap = true, silent = true })
 
 --replace DD and dd
@@ -128,9 +133,7 @@ end, { noremap = true, silent = true, desc = "Executar dotnet aspnet-codegenerat
 
 
 
-
-
-
+vim.keymap.set("n", "<leader>db", ":DBUIToggle<CR>", { noremap = true, silent = true , desc = "Executar DBUI" })
 
 vim.keymap.set("n", "<leader>zx", function()
     local function print_package_csplugin()
