@@ -25,14 +25,7 @@ vim.keymap.set("n", "<leader>duc", require("dapui").close)
 --ctrl a like 
 vim.keymap.set("n", "<C-a>", "ggVG", { noremap = true })
 
-vim.keymap.set("n", "<leader>tt", function ()
-    local floatedterm = Terminal:new({
-        direction="float",
-        close_on_exit=true
-    })
-
-    floatedterm:toggle()
-end)
+vim.keymap.set("n", "<leader>tt", vim.cmd.ToggleTerm)
 vim.keymap.set("n", "<leader>n", ':nohlsearch<CR>', { noremap = true, silent = true })
 
 --replace DD and dd

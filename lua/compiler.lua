@@ -57,6 +57,8 @@ local function yarn_develop_in_toggleterm()
 end
 
 
+
+
 local file_commands = {
     ["py"] = "python3 %s",
     ["lua"] = "lua %s",
@@ -66,9 +68,9 @@ local file_commands = {
     ["axaml"] = "dotnet run",
     ["rs"] = "cargo run",
     ["go"] = "go run %s",
-    ["java"] = "~/.config/nvim/shellscripts/run_java.sh %s",
-    ["c"] = nvim_dir .. "/shellscripts/run_clanguage.sh %s",
-    ["cpp"] = nvim_dir .. "/shellscripts/run_clanguage.sh %s",
+    ["java"] = require("compiler_lan.java_comp").build_java,
+    ["c"] = "python3 " .. nvim_dir .. "/shellscripts/run_clanguage.py %s",
+    ["cpp"] = "python3 " .. nvim_dir .. "/shellscripts/run_clanguage.py %s",
 }
 
 local function has_content(file_path)

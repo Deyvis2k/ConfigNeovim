@@ -44,6 +44,9 @@ local on_attach = require("nvchadlsp").on_attach
 
 lspconfig.cssls.setup { capabilities = capabilities }
 
+
+lspconfig.pyright.setup(require("pyright_config"))
+
 lspconfig.rust_analyzer.setup({
   on_attach = on_attach,
   capabilities = capabilities,

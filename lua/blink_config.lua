@@ -8,6 +8,10 @@ return {
         ---@module 'blink.cmp'
         ---@type blink.cmp.Config
         opts = {
+            enabled = function()
+                return not vim.tbl_contains({ "http" }, vim.bo.filetype)
+                  and vim.bo.buftype ~= "prompt"
+              end,
             keymap = {
                 preset = "default",
                 ["<CR>"] = { "accept", "fallback"},
@@ -64,7 +68,7 @@ return {
                 },
             },
 
-            signature = {enabled = true},
+            signature = {enabled = true, window = {border = "rounded", direction_priority = {"n"}, winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder"}},
 
             sources = {
                 default = { "lsp", "path", "snippets", "buffer", "emoji"},
