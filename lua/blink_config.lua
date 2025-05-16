@@ -55,7 +55,6 @@ return {
                     window = {
                         border = "single",
                         winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
-                        winblend = 10,
                     },
                 },
                 menu = {
@@ -68,7 +67,8 @@ return {
                 },
             },
 
-            signature = {enabled = true, window = {border = "rounded", direction_priority = {"n"}, winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder"}},
+            signature = {enabled = true, window = {border = "rounded"}},
+
 
             sources = {
                 default = { "lsp", "path", "snippets", "buffer", "emoji"},

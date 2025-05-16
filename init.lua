@@ -15,12 +15,21 @@ require("lazy").setup({
     require("dependencies")
 })
 
+
+local capabilities = require("nvchadlsp").capabilities
+local on_attach = require("nvchadlsp").on_attach
+
 local lspconfig = require("lspconfig")
-require("mason-lspconfig").setup_handlers({
+
+require("mason-lspconfig").setup({
   function(server_name)
-    lspconfig[server_name].setup({})
+    lspconfig[server_name].setup({
+            on_attach = on_attach,
+            capabilities = capabilities
+        })
   end,
 })
+
 
 require("mason").setup()
 require("preferences")
@@ -38,12 +47,9 @@ require("nvim-autopairs").setup()
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-local capabilities = require("nvchadlsp").capabilities
 local util = lspconfig.util
-local on_attach = require("nvchadlsp").on_attach
 
 lspconfig.cssls.setup { capabilities = capabilities }
-
 
 lspconfig.pyright.setup(require("pyright_config"))
 
@@ -60,15 +66,25 @@ lspconfig.rust_analyzer.setup({
   },
 })
 
+
 lspconfig.omnisharp.setup({
-  cmd = { "omnisharp" }, 
+  cmd = { "/home/deyvis/.local/share/nvim/mason/bin/OmniSharp" }, 
   on_attach = require("nvchadlsp").on_attach,
   capabilities = require("nvchadlsp").capabilities,
   settings = {
     FormattingOptions = {
-      EnableEditorConfigSupport = true
+      EnableEditorConfigSupport = true,
+      
     }
   }
+})
+
+
+
+lspconfig.clangd.setup({
+    on_attach=on_attach,
+    capabilities=capabilities,
+    filetypes= {"c", "cpp", "h", "hpp"}
 })
 
 lspconfig.lua_ls.setup({

@@ -21,6 +21,10 @@ vim.g.mapleader = " "
 vim.o.history = 1000
 vim.o.undodir = vim.fn.stdpath("data") .. "/undo"
 vim.o.undofile = true
+vim.diagnostic.config{
+    virtual_text = true,
+    -- virtual_lines = true
+}
 
 -- default status feedback
 --vim.o.showmode = false
