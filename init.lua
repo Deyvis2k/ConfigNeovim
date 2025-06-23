@@ -44,6 +44,9 @@ require("bufferline_vim")
 
 require("nvim-autopairs").setup()
 
+
+
+
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
@@ -68,13 +71,12 @@ lspconfig.rust_analyzer.setup({
 
 
 lspconfig.omnisharp.setup({
-  cmd = { "/home/deyvis/.local/share/nvim/mason/bin/OmniSharp" }, 
+  cmd = { "omnisharp"},
   on_attach = require("nvchadlsp").on_attach,
   capabilities = require("nvchadlsp").capabilities,
   settings = {
     FormattingOptions = {
       EnableEditorConfigSupport = true,
-      
     }
   }
 })
@@ -88,6 +90,7 @@ lspconfig.clangd.setup({
 })
 
 lspconfig.lua_ls.setup({
+  cmd = { "lua-language-server"},
   settings = {
     Lua = {
       runtime = { version = "LuaJIT" },
@@ -98,3 +101,34 @@ lspconfig.lua_ls.setup({
   },
 })
 
+
+require('lazydocker').setup({
+  window = {
+    settings = {
+      width = 0.818,
+      height = 0.818,
+      border = 'rounded',
+      relative = 'editor',
+    },
+  },
+})
+
+
+lspconfig.ts_ls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+    default_config = {
+    init_options = { hostInfo = 'neovim' },
+    cmd = { 'typescript-language-server', '--stdio' },
+    filetypes = {
+      'javascript',
+      'javascriptreact',
+      'javascript.jsx',
+      'typescript',
+      'typescriptreact',
+      'typescript.tsx',
+    },
+    root_dir = util.root_pattern('tsconfig.json', 'jsconfig.json', 'package.json', '.git'),
+    single_file_support = true,
+  },
+})

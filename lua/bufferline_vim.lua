@@ -4,7 +4,7 @@ require("bufferline").setup {
     close_command = "bdelete! %d",
     right_mouse_command = "bdelete! %d",
     left_mouse_command = "buffer %d",
-    separator_style = "slant",
+    -- separator_style = "slant",
     middle_mouse_command = nil,
     indicator = {
       icon = " ",
@@ -24,7 +24,9 @@ require("bufferline").setup {
     offsets = {
       {
         filetype = "NvimTree",
-        text = "File Explorer",
+        text = function ()
+            return vim.fn.getcwd()
+        end,
         text_align = "center",
         highlight = "Directory",
         separator = true

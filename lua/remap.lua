@@ -18,14 +18,18 @@ vim.keymap.set("n", "<F8>", require("dap").step_into)
 vim.keymap.set("n", "<F9>", require("dap").step_out)
 vim.keymap.set("n", "<leader>dr", require("dap").repl.open)
 
+vim.keymap.set({ 'n', 't' }, '<leader>ld', '<Cmd>lua LazyDocker.toggle()<CR>')
+
 --visual debug
 vim.keymap.set("n", "<leader>duo", require("dapui").open)
 vim.keymap.set("n", "<leader>duc", require("dapui").close)
 
+vim.keymap.set("n", "<Leader>ng", ":NuGet<CR>", {noremap= true, silent = true})
+
 --ctrl a like 
 vim.keymap.set("n", "<C-a>", "ggVG", { noremap = true })
 
-vim.keymap.set("n", "<leader>tt", vim.cmd.ToggleTerm)
+vim.keymap.set("n", "<leader>tt", ":ToggleTerm direction=float <CR>", {noremap = true, silent = true})
 vim.keymap.set("n", "<leader>n", ':nohlsearch<CR>', { noremap = true, silent = true })
 
 --replace DD and dd

@@ -10,18 +10,38 @@ local function get_current_file()
 end
 
 
+local function AfterPattern(str, pattern)
+    local s, e = string.find(str, pattern)
+    if s == nil then
+        return nil
+    end
+    return string.sub(str, e + 1)
+end
+
+
 local usrname = os.getenv("USER")
 local nvim_dir = "/home/" .. usrname .. "/.config/nvim"
 local current_dir = vim.fn.getcwd()
 
-local function ChangeBuildContent()
-    local file = io.open(current_dir .. "/build.txt", "w")
+function ChangeBuildContent()
+
+    local file_to_read = io.open(current_dir .. "/build.txt", "r")
+    if file_to_read == nil then
+        return
+    end
+
+    local content = file_to_read:read("*all")
+    local split_content = vim.split(content, "\n")
+    local filename_path_from_file = AfterPattern(split_content[1], "filename_path= ")
+    file_to_read:close()
+
+    local file = io.open(current_dir .. "/build.txt", "w+")
     if file == nil then
         return
     end
-    local current_file = vim.fn.getcwd()
-    local content = vim.fn.input("Enter content: ", current_file)
-    file:write(content)
+    local filename_path = vim.fn.input("Binary path name: ", filename_path_from_file)
+    local executable_name = vim.fn.input("Executable name: ")
+    file:write(string.format("filename_path= %s\nexecutable_name= %s", filename_path, executable_name))
     file:close()
 end
 
@@ -83,6 +103,19 @@ local function has_content(file_path)
     return content ~= ""
 end
 
+local function BuildFileIsWellFormated()
+    local file = io.open(current_dir .. "/build.txt", "r")
+    if file == nil then
+        return false
+    end
+    local content = file:read("*all")
+    file:close()
+    local split_content = vim.split(content, "\n")
+    return
+        split_content[1].find(split_content[1], "filename_path") ~= nil 
+        and split_content[2].find(split_content[2], "executable_name") ~= nil
+end
+
 local function RunDeterminedFile()
     local file_ext = vim.fn.expand('%:e')
     local filename = get_current_file()
@@ -91,10 +124,13 @@ local function RunDeterminedFile()
     end
 
     if file_ext == "c" or file_ext == "cpp" then
-        if vim.fn.filereadable(current_dir .. "/build.txt") == 1 and has_content(current_dir .. "/build.txt") then
+        if vim.fn.filereadable(current_dir .. "/build.txt") == 1 and has_content(current_dir .. "/build.txt")
+            and BuildFileIsWellFormated()
+        then
             print("If you want to change build.txt, enter the command: :lua ChangeBuildContent()")
         else
-            local binary_path = vim.fn.input("Binary name: ", current_dir)
+            local binary_path = vim.fn.input("Binary path name: ", current_dir)
+            local executable_name = vim.fn.input("Executable name: ")
             local build_file = io.open(current_dir .. "/build.txt", "w+")
             if build_file == nil then
                 print("Error opening file")
@@ -102,12 +138,12 @@ local function RunDeterminedFile()
             end
             build_file:close()
 
-            local file = io.open(current_dir .. "/build.txt", "a")
+            local file = io.open(current_dir .. "/build.txt", "w+")
             if file == nil then
                 print("Error opening file")
                 return
             end
-            file:write(binary_path)
+            file:write(string.format("filename_path= %s\nexecutable_name= %s", binary_path, executable_name))
             print("write at temp/build.txt: " .. binary_path)
             file:close()
         end
@@ -142,6 +178,5 @@ end
 
 
 return {
-    RunDeterminedFile = RunDeterminedFile,
-    ChangeBuildContent = ChangeBuildContent
+    RunDeterminedFile = RunDeterminedFile
 }

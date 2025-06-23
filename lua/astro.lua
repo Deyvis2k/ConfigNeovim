@@ -1,5 +1,5 @@
 require("astrotheme").setup({
-  palette = "astrolight",
+  palette = "astrodark",
   background = {
     light = "astrolight",
     dark = "astrodark",
@@ -10,8 +10,8 @@ require("astrotheme").setup({
     inactive = true,
     float = true,
     neotree = true,
-    border = true,
-    title_invert = true,
+    border = false,
+    title_invert = false,
     italic_comments = true,
     simple_syntax_colors = true,
   },
@@ -19,6 +19,6 @@ require("astrotheme").setup({
   terminal_color = true,
   plugin_default = "auto",
   plugins = {
-        ["bufferline.nvim"] = false,
+        ["bufferline.nvim"] = true,
   },
 })
