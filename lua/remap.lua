@@ -2,13 +2,13 @@ local Terminal = require('toggleterm.terminal').Terminal
 local compil = require('compiler')
 
 -- neo tree
-vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>e", ":lua Snacks.explorer.open()<CR>", { noremap = true, silent = true })
 
 -- comment nvim
 vim.keymap.set("n", "<leader>\\", require("Comment.api").toggle.linewise.current)
 vim.keymap.set("v", "<leader>\\", require("Comment.api").call('toggle.linewise', 'g@'), { expr = true })
 
-vim.keymap.set("n", "<leader>lg", ':LazyGit<CR>', { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>lg", ':lua Snacks.lazygit.open()<CR>', { noremap = true, silent = true })
 
 --debug
 vim.keymap.set("n", "<F4>", require("dap").toggle_breakpoint)

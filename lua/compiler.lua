@@ -1,7 +1,8 @@
 local Terminal = require('toggleterm.terminal').Terminal
+local used_snack = false
 
 local function get_current_file()
-    local filename = vim.api.nvim_buf_get_name(0) -- Pega o nome completo do arquivo no buffer atual
+    local filename = vim.api.nvim_buf_get_name(0) 
     if filename == "" then
         print("Sem arquivo no buffer atual")
         return nil
@@ -127,7 +128,10 @@ local function RunDeterminedFile()
         if vim.fn.filereadable(current_dir .. "/build.txt") == 1 and has_content(current_dir .. "/build.txt")
             and BuildFileIsWellFormated()
         then
-            print("If you want to change build.txt, enter the command: :lua ChangeBuildContent()")
+            if not used_snack then
+                Snacks.notify.info("If u want change the variables at build.txt\nthen execute ChangeBuildContent")
+                used_snack = true
+            end
         else
             local binary_path = vim.fn.input("Binary path name: ", current_dir)
             local executable_name = vim.fn.input("Executable name: ")

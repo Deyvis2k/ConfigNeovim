@@ -10,12 +10,16 @@ return {
   { "onsails/lspkind.nvim" },
   { "lukas-reineke/indent-blankline.nvim" },
   { "mg979/vim-visual-multi", branch = "master" },
-  { "folke/snacks.nvim" },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    config = require("snack_config")
+  },
   { "tpope/vim-dadbod" },
   { "kristijanhusak/vim-dadbod-ui"},
   { "kristijanhusak/vim-dadbod-completion" },
 
-  require("neo_tree_config"),
   require("blink_config"),
 
    {
@@ -58,6 +62,13 @@ return {
   }
   },
 
+  {
+    "wnkz/monoglow.nvim",
+    lazy  = false,
+    priority = 1000,
+    opts = {},
+  },
+
    {
     "mistweaverco/kulala.nvim",
     keys = {
@@ -88,14 +99,6 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-  },
-
-  --lazygit
-  {
-    "kdheepak/lazygit.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
   },
 
   { "tpope/vim-fugitive" },

@@ -11,8 +11,7 @@ require("themery").setup({
               "monokai-pro-spectrum","monokai-pro-octagon",
               "monokai-pro-ristretto","monokai-pro-classic",
               "monokai-pro-default", "tokyodark",
-              "sorbet", "retrobox",
-              "sorbet", "retrobox"},
+              "sorbet", "retrobox", "monoglow"},
     livepreview = true
 })
 
