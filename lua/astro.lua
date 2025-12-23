@@ -10,15 +10,19 @@ require("astrotheme").setup({
     inactive = true,
     float = true,
     neotree = true,
-    border = false,
-    title_invert = false,
+    border = true,
+    title_invert = true,
     italic_comments = true,
     simple_syntax_colors = true,
   },
+
   termguicolors = true,
+
   terminal_color = true,
+
   plugin_default = "auto",
   plugins = {
-        ["bufferline.nvim"] = true,
+    ["bufferline.nvim"] = false,
   },
+
 })

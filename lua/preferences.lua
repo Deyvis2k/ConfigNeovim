@@ -8,6 +8,7 @@ vim.o.shiftwidth = 4
 vim.o.wrap = false
 vim.g.codeium_enabled = false
 vim.o.termguicolors = true
+vim.opt.laststatus = 3
 vim.o.smartcase = true
 vim.o.mouse = "a"
 vim.o.hlsearch = true
@@ -25,6 +26,13 @@ vim.diagnostic.config{
     virtual_text = true,
     -- virtual_lines = true
 }
+vim.opt.laststatus = 3
+vim.opt.showmode = false
+vim.opt.ruler = false
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+--remove the line below statusline
+-- vim.cmd([[set noshowmode noshowcmd noruler]])
 
 -- default status feedback
 --vim.o.showmode = false

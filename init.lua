@@ -15,81 +15,21 @@ require("lazy").setup({
     require("dependencies")
 })
 
-
-local capabilities = require("nvchadlsp").capabilities
-local on_attach = require("nvchadlsp").on_attach
-
-local lspconfig = require("lspconfig")
-
-require("mason-lspconfig").setup({
-  function(server_name)
-    lspconfig[server_name].setup({
-            on_attach = on_attach,
-            capabilities = capabilities
-        })
-  end,
-})
-
-
 require("mason").setup()
+require("lspconfig_config")
 require("preferences")
 require("remap")
-require("telescope")
 require("treesitter")
+require("telescope_config")
 require("astro")
-require("themeryconfig")
 require("debug_config")
 require("bufferline_vim")
-
-
 require("nvim-autopairs").setup()
+require("nvim_autocmds_my")
+require("autoloading_settings")
+require("auto-session").setup({})
 
-
-
-
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
-local util = lspconfig.util
-
-lspconfig.cssls.setup { capabilities = capabilities }
-
-lspconfig.pyright.setup(require("pyright_config"))
-
-lspconfig.rust_analyzer.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-  filetypes = { "rust" },
-  root_dir = util.root_pattern("Cargo.toml"),
-  settings = {
-    ["rust-analyzer"] = {
-      cargo = { allFeatures = true, loadOutDirsFromCheck = true },
-      procMacro = { enable = true },
-    },
-  },
-})
-
-
-lspconfig.omnisharp.setup({
-  cmd = { "omnisharp"},
-  on_attach = require("nvchadlsp").on_attach,
-  capabilities = require("nvchadlsp").capabilities,
-  settings = {
-    FormattingOptions = {
-      EnableEditorConfigSupport = true,
-    }
-  }
-})
-
-
-
-lspconfig.clangd.setup({
-    on_attach=on_attach,
-    capabilities=capabilities,
-    filetypes= {"c", "cpp", "h", "hpp"}
-})
-
-lspconfig.lua_ls.setup({
+vim.lsp.config["lua_ls"] = {
   cmd = { "lua-language-server"},
   settings = {
     Lua = {
@@ -99,36 +39,16 @@ lspconfig.lua_ls.setup({
       telemetry = { enable = false },
     },
   },
-})
+}
 
 
-require('lazydocker').setup({
-  window = {
-    settings = {
-      width = 0.818,
-      height = 0.818,
-      border = 'rounded',
-      relative = 'editor',
-    },
-  },
-})
+vim.lsp.enable("lua_ls")
 
 
-lspconfig.ts_ls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-    default_config = {
-    init_options = { hostInfo = 'neovim' },
-    cmd = { 'typescript-language-server', '--stdio' },
-    filetypes = {
-      'javascript',
-      'javascriptreact',
-      'javascript.jsx',
-      'typescript',
-      'typescriptreact',
-      'typescript.tsx',
-    },
-    root_dir = util.root_pattern('tsconfig.json', 'jsconfig.json', 'package.json', '.git'),
-    single_file_support = true,
-  },
-})
+require('nvim-treesitter.configs').setup {
+  ensure_installed = { "xml", ... },
+  highlight = { enable = true },
+  -- ...
+}
+
+vim.treesitter.language.register('xml', 'axaml')

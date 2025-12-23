@@ -39,7 +39,7 @@ M.defaults = function()
   dofile(vim.g.base46_cache .. "lsp")
   require("nvchad.lsp").diagnostic_config()
 
-  require("lspconfig").lua_ls.setup {
+  vim.lsp.config["lua_ls"] = {
     on_attach = M.on_attach,
     capabilities = M.capabilities,
     on_init = M.on_init,

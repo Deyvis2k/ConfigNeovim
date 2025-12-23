@@ -86,7 +86,7 @@ local function build_java()
         toggleterm:toggle()
     else
         print("No gradlew or mvnw found, building with the default shell script")
-        local nvim_dir = "/home/deyvis/.config/nvim"
+        local nvim_dir = "~/.config/nvim"
         local toggleterm = Terminal:new({
             cmd = nvim_dir .. "/shellscripts/run_java.sh",
             direction = "float",

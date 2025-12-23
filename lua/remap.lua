@@ -1,5 +1,6 @@
 local Terminal = require('toggleterm.terminal').Terminal
-local compil = require('compiler')
+-- local compil = require('compiler')
+local compil = require('compile_everylanguage')
 
 -- neo tree
 vim.keymap.set("n", "<leader>e", ":lua Snacks.explorer.open()<CR>", { noremap = true, silent = true })
@@ -36,6 +37,9 @@ vim.keymap.set("n", "<leader>n", ':nohlsearch<CR>', { noremap = true, silent = t
 vim.keymap.set("n", "d", '"_d', { noremap = true })
 vim.keymap.set("v", "d", '"_d', { noremap = true })
 vim.keymap.set("v", "dd", '"_dd', { noremap = true })
+
+--command to format json with jq
+vim.keymap.set("n", "<leader>fjs", ":%!jq .<CR>", { noremap = true, silent = true , desc = "Format JSON with jq" })
 
 --codeium shortcuts
 -- codeium shortcuts
@@ -86,13 +90,6 @@ vim.keymap.set("n", "<leader>l", vim.cmd.bnext)
 vim.keymap.set("n", "<leader>l", ":bnext<CR>:redraw!<CR>", { silent = true })
 
 
---csplugin
-vim.api.nvim_set_keymap("n", "<leader>cs", ":lua require'csplugin.csplugin'.show()<CR>",
-    { noremap = true, silent = true })
-
-
-local Terminal = require("toggleterm.terminal").Terminal
-
 vim.keymap.set("n", "<leader>mm", function()
     local dir_name = vim.fn.getcwd()
     local csproj_file = vim.fn.globpath(dir_name, "*.csproj", false, true)[1] or ""
@@ -132,28 +129,13 @@ end, { noremap = true, silent = true, desc = "Executar dotnet aspnet-codegenerat
 
 vim.keymap.set("n", "<leader>db", ":DBUIToggle<CR>", { noremap = true, silent = true , desc = "Executar DBUI" })
 
-vim.keymap.set("n", "<leader>zx", function()
-    local function print_package_csplugin()
-        print(package.loaded["csplugin.csplugin"] or "csplugin.csplugin not loaded")
-    end
-    print_package_csplugin()
-end, { buffer = buf, nowait = true, noremap = true, silent = true })
 
-function reload_csplugin()
-    for plugin_name, _ in pairs(package.loaded) do
-        if plugin_name:match("^csplugin") then
-            package.loaded[plugin_name] = nil
-        end
-    end
-    local success, reloaded_plugin = pcall(require, "csplugin.csplugin")
-    if success then
-        vim.api.nvim_set_keymap("n", "<leader>cs", ":lua require'csplugin.csplugin'.show()<CR>",
-            { noremap = true, silent = true })
-        print("csplugin recarregado com sucesso!")
-    else
-        print("Erro ao recarregar csplugin:", reloaded_plugin)
-    end
-end
+vim.keymap.set("n", "<leader>as", ":AutoSession search<CR>"
+, {noremap = true})
 
---reload csplugin
-vim.api.nvim_set_keymap("n", "<leader>rcs", ":lua reload_csplugin()<CR>", { noremap = true, silent = true })
+local create_new_gobject_file = require("gobject_create").create_new_gobject_file
+
+vim.keymap.set("n", "<leader>nob", function()
+        create_new_gobject_file()
+    end
+, { noremap = true, silent = true, desc = "Create new GObject like"})

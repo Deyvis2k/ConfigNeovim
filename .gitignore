@@ -1,3 +1,4 @@
 plugin/
 temp/
 lazy-lock.json
+ftdetect/

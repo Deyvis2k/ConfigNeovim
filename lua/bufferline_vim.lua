@@ -9,6 +9,7 @@ require("bufferline").setup {
     indicator = {
       icon = " ",
     },
+    themable = true,
     buffer_close_icon = '',
     modified_icon = '●',
     close_icon = '',
@@ -34,13 +35,7 @@ require("bufferline").setup {
     },
 
     highlights = {
-        buffer_selected = {
-            fg = "#ff0000",
-        },
-        offset_separator = {
-                fg = "#ff0000",
-                bg = "#ff0000"
-        },
+        fill = {bg = "none"}
     },
   },
 }

@@ -25,8 +25,8 @@ dap.adapters.lldb = {
 
 dap.configurations.c = {
   {
-    name = "Launch",
     type = "lldb",
+    name = "lldb",
     request = "launch",
     program = function()
       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')

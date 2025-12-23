@@ -2,13 +2,17 @@
 --@usage
 --require("themes")
 return {
-  { "rose-pine/neovim" },
-  { "sainnhe/sonokai" },
-  { "Mofiqul/dracula.nvim" },
-  { "loctvl842/monokai-pro.nvim" },
-  { "tiagovla/tokyodark.nvim" },
-  { "AstroNvim/astrotheme"},
-  { "folke/tokyonight.nvim" },
-  { "navarasu/onedark.nvim"},
-  { "zaldih/themery.nvim" },
+    { "rose-pine/neovim" },
+    { "Mofiqul/dracula.nvim" },
+    { "loctvl842/monokai-pro.nvim" },
+    { "AstroNvim/astrotheme"},
+    { "folke/tokyonight.nvim" },
+    { "navarasu/onedark.nvim"},
+    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+    {
+      'stevedylandev/darkmatter-nvim',
+      lazy = false,
+      priority = 1000,
+    }
+
 }

@@ -1,5 +1,7 @@
 local Terminal = require('toggleterm.terminal').Terminal
 local used_snack = false
+local clang_opt = require("compiler_lan.clang_options_window")
+
 
 local function get_current_file()
     local filename = vim.api.nvim_buf_get_name(0) 
@@ -88,10 +90,11 @@ local file_commands = {
     ["cs"] = "dotnet run",
     ["axaml"] = "dotnet run",
     ["rs"] = "cargo run",
+    ["rb"] = "ruby %s",
     ["go"] = "go run %s",
     ["java"] = require("compiler_lan.java_comp").build_java,
-    ["c"] = "python3 " .. nvim_dir .. "/shellscripts/run_clanguage.py %s",
-    ["cpp"] = "python3 " .. nvim_dir .. "/shellscripts/run_clanguage.py %s",
+    ["c"] = clang_opt.create_window_select,
+    ["cpp"] = clang_opt.create_window_select
 }
 
 local function has_content(file_path)
@@ -156,7 +159,11 @@ local function RunDeterminedFile()
     local command = file_commands[file_ext]
 
     if command and type(command) == "function" then
-        command()
+        if file_ext == "c" or file_ext == "cpp" then
+            command(clang_opt, nvim_dir, filename)
+        else
+            command()
+        end
         return
     end
 
